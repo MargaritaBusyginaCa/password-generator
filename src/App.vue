@@ -1,9 +1,12 @@
-<script setup></script>
+<script setup>
+import PasswordInput from "@/components/PasswordInput.vue";
+</script>
 
 <template>
-  <div class="bg-darkGrey">
-    <h1 class="text-3xl font-bold underline text-almostWhite">Hello world!</h1>
-  </div>
+  <main
+    class="h-screen w-full bg-veryDarkGrey flex flex-col justify-center items-center"
+  >
+    <h1 class="text-grey text-2xl">Password Generator</h1>
+    <PasswordInput />
+  </main>
 </template>
-
-<style scoped></style>
