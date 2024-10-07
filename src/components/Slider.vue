@@ -15,13 +15,29 @@ function mouseDown(e) {
 
   const draggable = getSliderCircle();
   isDragging.value = true;
+
   offsetX.value = e.clientX - draggable.offsetLeft;
   draggable.style.cursor = "grabbing";
 }
-function mouseOver(e) {
+const charNum = ref(10);
+function mouseMove(e) {
   if (isDragging.value) {
     const draggable = getSliderCircle();
-    draggable.style.left = `${e.clientX - offsetX.value}px`;
+    const sliderLineWidth = getSliderLineWidth();
+    const circleWidth = draggable.clientWidth;
+
+    let newLeft = e.clientX - offsetX.value;
+
+    if (newLeft < 0) {
+      newLeft = 0;
+    } else if (newLeft > sliderLineWidth - circleWidth) {
+      newLeft = sliderLineWidth - circleWidth;
+    }
+
+    draggable.style.left = `${newLeft}px`;
+    console.log(newLeft);
+    console.log(sliderLineWidth);
+    charNum.value = Math.round(((newLeft / 100) * sliderLineWidth) / 73);
   }
 }
 function mouseUp() {
@@ -29,9 +45,13 @@ function mouseUp() {
   const draggable = getSliderCircle();
   draggable.style.cursor = "grab";
 }
+
+document.addEventListener("mousemove", mouseMove);
+document.addEventListener("mouseup", mouseUp);
 </script>
 
 <template>
+  <p class="text-white my-7">char number: {{ charNum }}</p>
   <div class="slider-line w-full h-2 bg-green relative cursor-pointer">
     <div
       class="slider-circle bg-darkGrey border-2 border-green border-solid absolute rounded-full"
