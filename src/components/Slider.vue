@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const isDragging = ref(false);
 const offsetX = ref(0);
-const charNum = ref(5); // Starts with default value of 5
+const charNum = ref(5);
 
 function getSliderCircle() {
   return document.querySelector(".slider-circle");
@@ -13,6 +13,9 @@ function getSliderLineWidth() {
   return document.querySelector(".slider-line").clientWidth;
 }
 
+function getActiveSliderLine() {
+  return document.querySelector(".slider-line-active");
+}
 function mouseDown(e) {
   isDragging.value = true;
   const draggable = getSliderCircle();
@@ -36,6 +39,9 @@ function mouseMove(e) {
 
     draggable.style.left = `${newLeft}px`;
 
+    const activeSliderLine = getActiveSliderLine();
+    activeSliderLine.style.width = `${newLeft}px`;
+
     // Calculates the character length based on slider position
     const maxChars = 15;
     const minChars = 5;
@@ -58,7 +64,10 @@ document.addEventListener("mouseup", mouseUp);
 
 <template>
   <p class="text-white my-7">char number: {{ charNum }}</p>
-  <div class="slider-line w-full h-2 bg-green relative cursor-pointer">
+  <div class="slider-line w-full h-2 bg-darkGrey relative cursor-pointer">
+    <div
+      class="slider-line-active w-0 h-2 bg-green relative cursor-pointer"
+    ></div>
     <div
       class="slider-circle bg-darkGrey border-2 border-green border-solid absolute rounded-full"
       @mousedown="mouseDown"
