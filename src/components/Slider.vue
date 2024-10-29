@@ -1,25 +1,25 @@
 <script setup>
 import { ref } from "vue";
+
 const isDragging = ref(false);
-const offsetX = ref(false);
+const offsetX = ref(0);
+const charNum = ref(5); // Starts with default value of 5
 
 function getSliderCircle() {
   return document.querySelector(".slider-circle");
 }
+
 function getSliderLineWidth() {
   return document.querySelector(".slider-line").clientWidth;
 }
 
 function mouseDown(e) {
   isDragging.value = true;
-
   const draggable = getSliderCircle();
-  isDragging.value = true;
-
   offsetX.value = e.clientX - draggable.offsetLeft;
   draggable.style.cursor = "grabbing";
 }
-const charNum = ref(10);
+
 function mouseMove(e) {
   if (isDragging.value) {
     const draggable = getSliderCircle();
@@ -35,11 +35,17 @@ function mouseMove(e) {
     }
 
     draggable.style.left = `${newLeft}px`;
-    console.log(newLeft);
-    console.log(sliderLineWidth);
-    charNum.value = Math.round(((newLeft / 100) * sliderLineWidth) / 73);
+
+    // Calculates the character length based on slider position
+    const maxChars = 15;
+    const minChars = 5;
+    const sliderPosition = newLeft / (sliderLineWidth - circleWidth);
+    charNum.value = Math.round(
+      minChars + sliderPosition * (maxChars - minChars)
+    );
   }
 }
+
 function mouseUp() {
   isDragging.value = false;
   const draggable = getSliderCircle();
@@ -56,8 +62,6 @@ document.addEventListener("mouseup", mouseUp);
     <div
       class="slider-circle bg-darkGrey border-2 border-green border-solid absolute rounded-full"
       @mousedown="mouseDown"
-      @mousemove="mouseOver"
-      @mouseup="mouseUp"
     ></div>
   </div>
 </template>

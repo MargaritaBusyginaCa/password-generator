@@ -12,7 +12,7 @@ function unHoverState() {
   currentStateIcon.value = copyIcon;
 }
 function copyPassword() {
-  //Copy the text inside the text field
+  //Copies the text inside the text field
   navigator.clipboard.writeText(password.value);
 }
 </script>
