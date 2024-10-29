@@ -63,13 +63,18 @@ document.addEventListener("mouseup", mouseUp);
 </script>
 
 <template>
-  <p class="text-white my-7">char number: {{ charNum }}</p>
-  <div class="slider-line w-full h-2 bg-darkGrey relative cursor-pointer">
+  <div class="text-white mb-7 flex justify-between items-center">
+    <h2 class="text-base">Character Length</h2>
+    <span class="text-lg text-green">{{ charNum }}</span>
+  </div>
+  <div
+    class="slider-line w-full h-2 bg-veryDarkGrey relative cursor-pointer mb-4"
+  >
     <div
       class="slider-line-active w-0 h-2 bg-green relative cursor-pointer"
     ></div>
     <div
-      class="slider-circle bg-darkGrey border-2 border-green border-solid absolute rounded-full"
+      class="slider-circle bg-veryDarkGrey border-2 border-green border-solid absolute rounded-full"
       @mousedown="mouseDown"
     ></div>
   </div>

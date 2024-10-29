@@ -13,6 +13,10 @@ export default {
         darkGrey: "#24232C",
         veryDarkGrey: "#18171F",
       },
+      fontSize: {
+        base: "18px",
+        lg: "32px",
+      },
     },
   },
   plugins: [],
