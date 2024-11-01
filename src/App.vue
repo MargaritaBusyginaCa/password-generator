@@ -1,7 +1,7 @@
 <script setup>
 import PasswordInput from "@/components/PasswordInput.vue";
-import Slider from "./components/Slider.vue";
-import CheckboxGroup from "./components/CheckboxGroup.vue";
+import Slider from "@/components/Slider.vue";
+import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import { ref } from "vue";
 
 const selectedOptions = ref([]);

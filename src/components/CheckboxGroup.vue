@@ -1,5 +1,6 @@
 <script setup>
 import { defineEmits } from "vue";
+import iconCheck from "@/assets/images/icon-check.svg";
 const props = defineProps({
   modelValue: Array,
   options: Array,
@@ -15,7 +16,7 @@ function toggleCheckbox(value) {
 }
 </script>
 <template>
-  <div class="py-4">
+  <div class="py-4 relative">
     <label
       v-for="option in options"
       :key="option.label"
@@ -25,8 +26,13 @@ function toggleCheckbox(value) {
         type="checkbox"
         :value="option.value"
         :checked="modelValue.includes(option.value)"
-        class="w-5 h-5 appearance-none bg-darkGrey border-green checked:bg-green accent-darkGrey border cursor-pointer"
+        class="w-5 h-5 appearance-none bg-darkGrey border-green checked:bg-green accent-darkGrey border cursor-pointer peer"
         @change="toggleCheckbox(option.value)"
+      />
+      <img
+        :src="iconCheck"
+        alt="checkbox check mark"
+        class="h-4 w-4 absolute ml-0.5 mt-0.5 opacity-0 peer-checked:opacity-100"
       />
       {{ option.label }}
     </label>
