@@ -17,6 +17,9 @@ export default {
         base: "18px",
         lg: "32px",
       },
+      width: {
+        card: "500px",
+      },
     },
   },
   plugins: [],

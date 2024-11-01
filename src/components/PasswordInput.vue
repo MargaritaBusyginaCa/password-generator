@@ -18,9 +18,7 @@ function copyPassword() {
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-between py-5 px-8 bg-darkGrey w-[400px]"
-  >
+  <div class="flex items-center justify-between py-5 px-8 bg-darkGrey w-card">
     <p class="text-3xl text-almostWhite">{{ password }}</p>
     <img
       id="copy-icon"
