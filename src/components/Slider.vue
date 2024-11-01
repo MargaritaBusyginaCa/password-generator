@@ -1,10 +1,16 @@
 <script setup>
-import { ref } from "vue";
-
+import { ref, defineEmits } from "vue";
+defineProps({
+  modelValue: Number,
+});
 const isDragging = ref(false);
 const offsetX = ref(0);
 const charNum = ref(5);
+const emit = defineEmits(["update:modelValue"]);
 
+function updateChar(value) {
+  emit("update:modelValue", value);
+}
 function getSliderCircle() {
   return document.querySelector(".slider-circle");
 }
@@ -49,6 +55,7 @@ function mouseMove(e) {
     charNum.value = Math.round(
       minChars + sliderPosition * (maxChars - minChars)
     );
+    updateChar(charNum.value);
   }
 }
 
