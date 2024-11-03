@@ -3,7 +3,7 @@ import PasswordInput from "@/components/PasswordInput.vue";
 import Slider from "@/components/Slider.vue";
 import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import StrengthCard from "./components/StrengthCard.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const selectedOptions = ref([]);
 const charLength = ref(0);
@@ -13,6 +13,32 @@ const checkboxOptions = [
   { value: "numbers", label: "Include Numbers" },
   { value: "symbols", label: "Include Symbols" },
 ];
+function randomizePassword() {
+  let result = "";
+  let charList = "abcdefghijklmnopqrstuvwxyz";
+  //include numbers
+  if (selectedOptions.value.includes("numbers")) {
+    charList = `${charList}0123456789`;
+  }
+  //include symbols
+  if (selectedOptions.value.includes("symbols")) {
+    charList = `${charList}!@#$%^&*()_-+=`;
+  }
+
+  for (let i = 0; i < charLength.value; i++) {
+    let randomChar = charList.charAt(
+      Math.floor(Math.random() * charList.length)
+    );
+    result += randomChar;
+    console.log(result);
+  }
+  //include uppercase + lowercase
+  //include uppercase only
+  //include lowercase only
+}
+watch(charLength, () => {
+  randomizePassword();
+});
 </script>
 
 <template>
