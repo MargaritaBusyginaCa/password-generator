@@ -3,6 +3,7 @@ import PasswordInput from "@/components/PasswordInput.vue";
 import Slider from "@/components/Slider.vue";
 import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import StrengthCard from "./components/StrengthCard.vue";
+import Button from "./components/Button.vue";
 import { ref, watch } from "vue";
 
 const selectedOptions = ref([]);
@@ -65,6 +66,7 @@ watch(selectedOptions, () => {
       <Slider v-model="charLength" />
       <CheckboxGroup :options="checkboxOptions" v-model="selectedOptions" />
       <StrengthCard />
+      <Button />
     </div>
   </main>
 </template>
