@@ -5,7 +5,7 @@ defineProps({
 });
 const isDragging = ref(false);
 const offsetX = ref(0);
-const charNum = ref(5);
+const charNum = ref(0);
 const emit = defineEmits(["update:modelValue"]);
 
 function updateChar(value) {
@@ -49,7 +49,7 @@ function mouseMove(e) {
     activeSliderLine.style.width = `${newLeft}px`;
 
     // Calculates the character length based on slider position
-    const maxChars = 15;
+    const maxChars = 20;
     const minChars = 5;
     const sliderPosition = newLeft / (sliderLineWidth - circleWidth);
     charNum.value = Math.round(
