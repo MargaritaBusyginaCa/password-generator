@@ -5,7 +5,7 @@ defineProps({
 });
 const isDragging = ref(false);
 const offsetX = ref(0);
-const charNum = ref(0);
+const charNum = ref(5);
 const emit = defineEmits(["update:modelValue"]);
 
 function updateChar(value) {

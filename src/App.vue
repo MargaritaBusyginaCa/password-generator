@@ -4,10 +4,10 @@ import Slider from "@/components/Slider.vue";
 import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import StrengthCard from "./components/StrengthCard.vue";
 import Button from "./components/Button.vue";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const selectedOptions = ref([]);
-const charLength = ref(0);
+const charLength = ref(5);
 const checkboxOptions = [
   { value: "uppercase", label: "Include Uppercase Letters" },
   { value: "lowercase", label: "Include Lowercase Letters" },
@@ -48,12 +48,6 @@ function randomizePassword() {
   }
   generatedPwd.value = result;
 }
-watch(charLength, () => {
-  randomizePassword();
-});
-watch(selectedOptions, () => {
-  randomizePassword();
-});
 </script>
 
 <template>
@@ -66,7 +60,7 @@ watch(selectedOptions, () => {
       <Slider v-model="charLength" />
       <CheckboxGroup :options="checkboxOptions" v-model="selectedOptions" />
       <StrengthCard />
-      <Button />
+      <Button @generatePwd="randomizePassword" />
     </div>
   </main>
 </template>

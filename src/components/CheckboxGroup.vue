@@ -20,7 +20,7 @@ function toggleCheckbox(value) {
     <label
       v-for="option in options"
       :key="option.label"
-      class="text-almostWhite text-base flex gap-5 my-2 items-center"
+      class="text-almostWhite text-base flex gap-5 my-2 items-center hover:cursor-pointer"
     >
       <input
         type="checkbox"
