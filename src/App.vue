@@ -4,7 +4,7 @@ import Slider from "@/components/Slider.vue";
 import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import StrengthCard from "./components/StrengthCard.vue";
 import Button from "./components/Button.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const selectedOptions = ref([]);
 const charLength = ref(5);
@@ -14,6 +14,7 @@ const checkboxOptions = [
   { value: "numbers", label: "Include Numbers" },
   { value: "symbols", label: "Include Symbols" },
 ];
+
 const generatedPwd = ref("");
 function randomizePassword() {
   let result = "";
@@ -48,6 +49,20 @@ function randomizePassword() {
   }
   generatedPwd.value = result;
 }
+const pwdStrength = computed(() => {
+  //strong password: (12-20 char all included)
+  //strong password: (15-20 char numbers included)
+  //strong password: (15-20 char symbols included)
+  //medium password: (8 - 11 char all included)
+  //medium password: (8-14 char numbers included)
+  //medium password: (8-14 char symbols included)
+  //weak password: (11- 20 char nothing included)
+  //weak password: (5-8 char numbers included)
+  //weak password: (5-8 char symbols included)
+  //weak password: (5-8 char numbers and symbols included)
+  //too weak: (less than 11 char and nothing included)
+  //everything else
+});
 </script>
 
 <template>
@@ -59,7 +74,7 @@ function randomizePassword() {
     <div class="w-card m-4 px-8 py-5 bg-darkGrey">
       <Slider v-model="charLength" />
       <CheckboxGroup :options="checkboxOptions" v-model="selectedOptions" />
-      <StrengthCard />
+      <StrengthCard :pwdStrength="pwdStrength" />
       <Button @generatePwd="randomizePassword" />
     </div>
   </main>

@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
-const pwdStrength = ref("Weak");
+defineProps({
+  pwdStrength: String,
+});
 </script>
 <template>
   <div class="flex justify-between uppercase text-base bg-veryDarkGrey p-6">
