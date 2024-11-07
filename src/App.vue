@@ -4,7 +4,7 @@ import Slider from "@/components/Slider.vue";
 import CheckboxGroup from "@/components/CheckboxGroup.vue";
 import StrengthCard from "./components/StrengthCard.vue";
 import Button from "./components/Button.vue";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const selectedOptions = ref([]);
 const charLength = ref(5);
@@ -18,78 +18,32 @@ const checkboxOptions = [
 const generatedPwd = ref("");
 const pwdStrength = ref("");
 function randomizePassword() {
+  const baseCharList = [
+    "abcdefghijklmnopqrstuvwxyz",
+    selectedOptions.value.includes("numbers") ? "0123456789" : "",
+    selectedOptions.value.includes("symbols") ? "!@#$%^&*()_-+=" : "",
+  ].join("");
+
   let result = "";
-  let charList = "abcdefghijklmnopqrstuvwxyz";
-  if (selectedOptions.value.includes("numbers")) {
-    charList = `${charList}0123456789`;
-  }
-  if (selectedOptions.value.includes("symbols")) {
-    charList = `${charList}!@#$%^&*()_-+=`;
-  }
-
   for (let i = 0; i < charLength.value; i++) {
-    let randomChar = charList.charAt(
-      Math.floor(Math.random() * charList.length)
+    let randomChar = baseCharList.charAt(
+      Math.floor(Math.random() * baseCharList.length)
     );
-    if (
-      selectedOptions.value.includes("uppercase") &&
-      selectedOptions.value.includes("lowercase")
-    ) {
-      if (/[a-z]/.test(randomChar) && Math.random() > 0.5) {
-        randomChar = randomChar.toUpperCase();
-      }
+    if (selectedOptions.value.includes("uppercase") && Math.random() > 0.5) {
+      randomChar = randomChar.toUpperCase();
     }
-
     result += randomChar;
-    if (
-      selectedOptions.value.includes("uppercase") &&
-      !selectedOptions.value.includes("lowercase")
-    ) {
-      result = result.toUpperCase();
-    }
   }
   generatedPwd.value = result;
   pwdStrength.value = calculatePwdStrength();
 }
+
 function calculatePwdStrength() {
-  if (
-    (charLength.value >= 12 &&
-      selectedOptions.value.length === checkboxOptions.length) ||
-    (charLength.value >= 15 && selectedOptions.value.includes("symbols")) ||
-    (charLength.value >= 15 && selectedOptions.value.includes("numbers"))
-  ) {
+  const optionCount = selectedOptions.value.length;
+  if (charLength.value >= 12 && optionCount === checkboxOptions.length)
     return "strong";
-  } else if (
-    (charLength.value >= 8 &&
-      charLength.value <= 11 &&
-      selectedOptions.value.length === checkboxOptions.length) ||
-    (charLength.value >= 8 &&
-      charLength.value <= 14 &&
-      selectedOptions.value.includes("symbols")) ||
-    (charLength.value >= 8 &&
-      charLength.value <= 14 &&
-      selectedOptions.value.includes("numbers")) ||
-    (selectedOptions.value.length === 0 && charLength.value >= 11)
-  ) {
-    return "medium";
-  } else if (
-    (charLength.value >= 8 &&
-      charLength.value < 11 &&
-      selectedOptions.value.length === 0) ||
-    (charLength.value >= 6 &&
-      charLength.value < 8 &&
-      selectedOptions.value.includes("symbols")) ||
-    (charLength.value >= 6 &&
-      charLength.value < 8 &&
-      selectedOptions.value.includes("numbers")) ||
-    (charLength.value >= 8 &&
-      !selectedOptions.value.includes("numbers") &&
-      !selectedOptions.value.includes("symbols"))
-  ) {
-    return "weak";
-  } else {
-    return "too-weak";
-  }
+  if (charLength.value >= 8 && optionCount >= 2) return "medium";
+  return charLength.value >= 6 ? "weak" : "too-weak";
 }
 </script>
 
