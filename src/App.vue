@@ -16,6 +16,7 @@ const checkboxOptions = [
 ];
 
 const generatedPwd = ref("");
+const pwdStrength = ref("");
 function randomizePassword() {
   let result = "";
   let charList = "abcdefghijklmnopqrstuvwxyz";
@@ -48,21 +49,48 @@ function randomizePassword() {
     }
   }
   generatedPwd.value = result;
+  pwdStrength.value = calculatePwdStrength();
 }
-const pwdStrength = computed(() => {
-  //strong password: (12-20 char all included)
-  //strong password: (15-20 char numbers included)
-  //strong password: (15-20 char symbols included)
-  //medium password: (8 - 11 char all included)
-  //medium password: (8-14 char numbers included)
-  //medium password: (8-14 char symbols included)
-  //weak password: (11- 20 char nothing included)
-  //weak password: (5-8 char numbers included)
-  //weak password: (5-8 char symbols included)
-  //weak password: (5-8 char numbers and symbols included)
-  //too weak: (less than 11 char and nothing included)
-  //everything else
-});
+function calculatePwdStrength() {
+  if (
+    (charLength.value >= 12 &&
+      selectedOptions.value.length === checkboxOptions.length) ||
+    (charLength.value >= 15 && selectedOptions.value.includes("symbols")) ||
+    (charLength.value >= 15 && selectedOptions.value.includes("numbers"))
+  ) {
+    return "strong";
+  } else if (
+    (charLength.value >= 8 &&
+      charLength.value <= 11 &&
+      selectedOptions.value.length === checkboxOptions.length) ||
+    (charLength.value >= 8 &&
+      charLength.value <= 14 &&
+      selectedOptions.value.includes("symbols")) ||
+    (charLength.value >= 8 &&
+      charLength.value <= 14 &&
+      selectedOptions.value.includes("numbers")) ||
+    (selectedOptions.value.length === 0 && charLength.value >= 11)
+  ) {
+    return "medium";
+  } else if (
+    (charLength.value >= 8 &&
+      charLength.value < 11 &&
+      selectedOptions.value.length === 0) ||
+    (charLength.value >= 6 &&
+      charLength.value < 8 &&
+      selectedOptions.value.includes("symbols")) ||
+    (charLength.value >= 6 &&
+      charLength.value < 8 &&
+      selectedOptions.value.includes("numbers")) ||
+    (charLength.value >= 8 &&
+      !selectedOptions.value.includes("numbers") &&
+      !selectedOptions.value.includes("symbols"))
+  ) {
+    return "weak";
+  } else {
+    return "too-weak";
+  }
+}
 </script>
 
 <template>
