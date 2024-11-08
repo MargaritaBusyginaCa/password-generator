@@ -16,7 +16,9 @@ function unHoverState() {
 }
 function copyPassword() {
   //Copies the text inside the text field
-  navigator.clipboard.writeText(password.value);
+  if (!initialState.value) {
+    navigator.clipboard.writeText(password.value);
+  }
 }
 const generatedPwd = toRef(props, "generatedPwd");
 const selectableClass = computed(() => {
@@ -31,8 +33,12 @@ watch(generatedPwd, (newVal) => {
 </script>
 
 <template>
-  <div class="flex items-center justify-between py-5 px-8 bg-darkGrey w-card">
-    <p :class="['text-3xl', 'text-almostWhite', selectableClass]">
+  <div
+    class="flex items-center justify-between py-5 px-4 bg-darkGrey w-full md:w-card md:px-8"
+  >
+    <p
+      :class="['text-base', 'md:text-3xl', 'text-almostWhite', selectableClass]"
+    >
       {{ password }}
     </p>
     <img

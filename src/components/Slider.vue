@@ -22,20 +22,23 @@ function getSliderLineWidth() {
 function getActiveSliderLine() {
   return document.querySelector(".slider-line-active");
 }
-function mouseDown(e) {
+
+function startDrag(e) {
   isDragging.value = true;
   const draggable = getSliderCircle();
-  offsetX.value = e.clientX - draggable.offsetLeft;
+  const clientX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
+  offsetX.value = clientX - draggable.offsetLeft;
   draggable.style.cursor = "grabbing";
 }
 
-function mouseMove(e) {
+function dragMove(e) {
   if (isDragging.value) {
     const draggable = getSliderCircle();
     const sliderLineWidth = getSliderLineWidth();
     const circleWidth = draggable.clientWidth;
 
-    let newLeft = e.clientX - offsetX.value;
+    const clientX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
+    let newLeft = clientX - offsetX.value;
 
     if (newLeft < 0) {
       newLeft = 0;
@@ -59,14 +62,16 @@ function mouseMove(e) {
   }
 }
 
-function mouseUp() {
+function endDrag() {
   isDragging.value = false;
   const draggable = getSliderCircle();
   draggable.style.cursor = "grab";
 }
 
-document.addEventListener("mousemove", mouseMove);
-document.addEventListener("mouseup", mouseUp);
+document.addEventListener("mousemove", dragMove);
+document.addEventListener("mouseup", endDrag);
+document.addEventListener("touchmove", dragMove, { passive: false });
+document.addEventListener("touchend", endDrag);
 </script>
 
 <template>
@@ -82,7 +87,8 @@ document.addEventListener("mouseup", mouseUp);
     ></div>
     <div
       class="slider-circle bg-veryDarkGrey border-2 border-green border-solid absolute rounded-full"
-      @mousedown="mouseDown"
+      @mousedown="startDrag"
+      @touchstart.prevent="startDrag"
     ></div>
   </div>
 </template>

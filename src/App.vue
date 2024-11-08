@@ -49,11 +49,11 @@ function calculatePwdStrength() {
 
 <template>
   <main
-    class="h-screen w-full bg-veryDarkGrey flex flex-col justify-center items-center"
+    class="h-screen w-full bg-veryDarkGrey flex flex-col justify-center items-center p-4"
   >
     <h1 class="text-grey text-2xl mb-6">Password Generator</h1>
     <PasswordInput :generatedPwd="generatedPwd" />
-    <div class="w-card m-4 px-8 py-5 bg-darkGrey">
+    <div class="m-4 px-4 py-5 bg-darkGrey w-full md:w-card md:px-8">
       <Slider v-model="charLength" />
       <CheckboxGroup :options="checkboxOptions" v-model="selectedOptions" />
       <StrengthCard :pwdStrength="pwdStrength" />
